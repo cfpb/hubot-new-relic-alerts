@@ -1,6 +1,6 @@
-# hubot-new-relic-alerts [![Build Status](https://img.shields.io/travis/catops/hubot-new-relic-alerts.svg?maxAge=2592000&style=flat-square)](https://travis-ci.org/catops/hubot-new-relic-alerts) [![npm](https://img.shields.io/npm/v/hubot-new-relic-alerts.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/hubot-new-relic-alerts)
+# hubot-new-relic-alerts [![Build Status](https://img.shields.io/travis/cfpb/hubot-new-relic-alerts.svg?maxAge=2592000&style=flat-square)](https://travis-ci.org/cfpb/hubot-new-relic-alerts) [![npm](https://img.shields.io/npm/v/hubot-new-relic-alerts.svg?maxAge=2592000&style=flat-square)](https://www.npmjs.com/package/hubot-new-relic-alerts)
 
-:cat: A hubot script to tell your team of today's New Relic warnings and violations
+:fire_engine: A hubot script to tell your team today's New Relic warnings and violations
 
 See [`src/new-relic-alerts.coffee`](src/new-relic-alerts.coffee) for full documentation.
 
