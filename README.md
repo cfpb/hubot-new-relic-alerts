@@ -25,8 +25,3 @@ hubot>> Daily performance update! There are 5 performance warnings and 1 perform
 ## Contributing
 
 Please read our general [contributing guidelines](CONTRIBUTING.md).
-
-## Open source licensing info
-1. [TERMS](TERMS.md)
-2. [LICENSE](LICENSE)
-3. [CFPB Source Code Policy](https://github.com/cfpb/source-code-policy/)
