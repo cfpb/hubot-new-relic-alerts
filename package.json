@@ -1,7 +1,7 @@
 {
   "name": "hubot-new-relic-alerts",
   "description": "A hubot script to tell your team of today's New Relic warnings and violations",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Kimberly Munoz <kimberly.munoz@cfpb.gov>",
   "license": "CC0",
   "keywords": [
