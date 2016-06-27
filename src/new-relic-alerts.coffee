@@ -42,7 +42,7 @@ checkNewRelic = (robot) ->
     body.violations.forEach (el) ->
       countWarningsViolations(el) if not process.env.HUBOT_NEW_RELIC_POLICY_ID
 
-      countWarningsViolations(el) if el.links.policy_id == process.env.HUBOT_NEW_RELIC_POLICY_ID
+      countWarningsViolations(el) if el.links.policy_id == Number(process.env.HUBOT_NEW_RELIC_POLICY_ID)
 
     msg = "Daily performance update! There are #{numOfWarnings} performance warnings and #{numOfViolations} performance policy violations today. Check them out at #{newRelicURL}"
 
