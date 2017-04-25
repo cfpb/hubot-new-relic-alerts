@@ -29,7 +29,9 @@
     "hubot": "^2.18.0",
     "hubot-test-helper": "^1.4.4",
     "matchdep": "~1.0.1",
+    "moment": "2.10.2",
     "mocha": "^2.4.5",
+    "quick-gist": "^1.3.1",
     "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0"
   },
