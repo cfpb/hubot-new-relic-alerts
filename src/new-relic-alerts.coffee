@@ -15,14 +15,17 @@
 # Author:
 #   Kimberly Munoz
 
+gist = require 'quick-gist'
+moment = require 'moment'
 request = require 'request'
+
 
 checkNewRelic = (robot) ->
 
   newRelicURL = process.env.HUBOT_NEW_RELIC_INCIDENTS_PAGE or 'https://alerts.newrelic.com/'
 
   options =
-    url:'https://api.newrelic.com/v2/alerts_violations.json'
+    url:'https://api.newrelic.com/v2/alerts_violations.json?only_open=true'
     headers:
       'X-Api-Key': process.env.HUBOT_NEW_RELIC_API_KEY
 
@@ -33,7 +36,11 @@ checkNewRelic = (robot) ->
 
     numOfWarnings = 0
     numOfViolations = 0
-
+    lines = []
+    header = """
+    | Entity | Policy name | Opened | Duration |
+    | ---    | ---         | ---    | ---      |
+    """
 
     countWarningsViolations = (el) ->
       numOfWarnings++ if el.priority is 'Warning'
@@ -41,12 +48,27 @@ checkNewRelic = (robot) ->
 
     body.violations.forEach (el) ->
       countWarningsViolations(el) if not process.env.HUBOT_NEW_RELIC_POLICY_ID
-
       countWarningsViolations(el) if el.links.policy_id == Number(process.env.HUBOT_NEW_RELIC_POLICY_ID)
+
+      line = []
+      line.push "|" + el.entity.name
+      line.push "#{el.policy_name} - #{el.condition_name}"
+      line.push moment(el.opened_at).calendar()
+      line.push moment.duration(el.duration, 's').humanize()
+      lines.push line.join " | "
 
     msg = "Daily performance update! There are #{numOfWarnings} performance warnings and #{numOfViolations} performance policy violations today. Check them out at #{newRelicURL}"
 
     robot.messageRoom process.env.HUBOT_NEW_RELIC_ALERT_ROOM, msg
+
+    msg = "#{header}\n" + lines.join(" |\n")
+    if msg.length >= 4000
+      gist {content: msg, enterpriseOnly: true, fileExtension: 'md'}, (err, resp, data) ->
+        url = data.html_url
+        robot.messageRoom process.env.HUBOT_NEW_RELIC_ALERT_ROOM, "View output at: " + url
+    else
+        robot.messageRoom process.env.HUBOT_NEW_RELIC_ALERT_ROOM, msg
+
 
   request(options, processNewRelicAPI)
 
@@ -54,6 +76,10 @@ module.exports = (robot) ->
 
   if !process.env.HUBOT_NEW_RELIC_ALERT_ROOM
     return robot.logger.debug "New Relic Alert Room environment variable has not been set"
+
+  robot.respond /testchecknewrelic/i, (msg) ->
+    console.log "Testing new relic alert output"
+    checkNewRelic(robot)
 
   scheduleAtHour = (cb) ->
     hour = process.env.HUBOT_NEW_RELIC_ALERT_HOUR or 12
